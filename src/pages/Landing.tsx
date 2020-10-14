@@ -24,7 +24,7 @@ function Landing() {
         </div>
 
         <Link
-          to="/app"
+          to="/map"
           className="enter-app"
         >
           <FiArrowRight
