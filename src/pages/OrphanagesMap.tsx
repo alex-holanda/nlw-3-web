@@ -20,6 +20,7 @@ interface Orphanage {
 function OrphanagesMap() {
 
   const [orphanages, setOrphanages] = useState<Orphanage[]>([]);
+  const [location, setLocation] = useState({ latitude: -23.5521232, longitude: -46.6373499});
 
   useEffect(() => {
     api
@@ -27,6 +28,15 @@ function OrphanagesMap() {
       .then(response => {
         setOrphanages(response.data);
       });
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        setLocation({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude
+        });
+      })
+    }
   }, []);
 
   return (
@@ -41,13 +51,14 @@ function OrphanagesMap() {
         </header>
 
         <footer>
-          <strong>Rio do Sul</strong>
-          <span>Santa Catarina</span>
+          <strong>São Paulo</strong>
+          <span>São Paulo</span>
         </footer>
       </aside>
 
+      {/* center={[-23.6265663, -46.5133745]} */}
       <Map
-        center={[-23.6265663, -46.5133745]}
+        center={[location.latitude, location.longitude]}
         zoom={15}
         style={{ width: '100%', height: '100%' }}
       >
